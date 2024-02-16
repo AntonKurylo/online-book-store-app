@@ -3,6 +3,7 @@ package mate.academy.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.dto.BookDto;
+import mate.academy.dto.BookSearchParametersDto;
 import mate.academy.dto.CreateBookRequestDto;
 import mate.academy.service.BookService;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public BookDto createBook(@RequestBody CreateBookRequestDto requestDto) {
+        return bookService.save(requestDto);
+    }
+
     @GetMapping
-    public List<BookDto> findAll() {
+    public List<BookDto> findAllBooks() {
         return bookService.findAll();
     }
 
@@ -32,19 +39,20 @@ public class BookController {
         return bookService.findBookById(id);
     }
 
-    @PostMapping
-    public BookDto createBook(@RequestBody CreateBookRequestDto requestDto) {
-        return bookService.save(requestDto);
-    }
-
     @PutMapping("/{id}")
-    public BookDto updateById(@PathVariable Long id, @RequestBody CreateBookRequestDto requestDto) {
+    public BookDto updateBookById(@PathVariable Long id,
+                                  @RequestBody CreateBookRequestDto requestDto) {
         return bookService.updateById(id, requestDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public void deleteBookById(@PathVariable Long id) {
         bookService.deleteById(id);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
     }
 }

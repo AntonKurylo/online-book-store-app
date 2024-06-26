@@ -30,7 +30,7 @@ public class CustomGlobalExceptionHandler {
 
     @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<Object> handleRegistrationExceptions(RegistrationException ex) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.CONFLICT;
         List<String> errors = List.of(ex.getMessage());
         Map<String, Object> body = buildBody(errors, status);
         return new ResponseEntity<>(body, status);

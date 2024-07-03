@@ -12,6 +12,7 @@ import mate.academy.validation.Isbn;
 public class CreateBookRequestDto {
     private static final int MIN_VALUE = 0;
     private static final int MIN_DESCRIPTION_LENGTH = 25;
+    private static final int MAX_DESCRIPTION_LENGTH = 1024;
 
     @NotBlank
     private String title;
@@ -22,7 +23,7 @@ public class CreateBookRequestDto {
     @NotNull
     @Min(value = MIN_VALUE)
     private BigDecimal price;
-    @Size(min = MIN_DESCRIPTION_LENGTH)
+    @Size(min = MIN_DESCRIPTION_LENGTH, max = MAX_DESCRIPTION_LENGTH)
     private String description;
     private String coverImage;
 }

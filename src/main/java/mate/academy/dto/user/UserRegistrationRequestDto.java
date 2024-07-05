@@ -2,7 +2,6 @@ package mate.academy.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import java.util.Set;
 import mate.academy.validation.FieldMatch;
 
 @FieldMatch(
@@ -22,8 +21,7 @@ public record UserRegistrationRequestDto(
         String firstName,
         @NotBlank
         String lastName,
-        String shippingAddress,
-        Set<Long> roles
+        String shippingAddress
 ) {
 }
 

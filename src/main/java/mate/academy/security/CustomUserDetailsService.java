@@ -1,6 +1,7 @@
 package mate.academy.security;
 
 import lombok.RequiredArgsConstructor;
+import mate.academy.exception.EntityNotFoundException;
 import mate.academy.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +16,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException("Can't find user by email"));
+                new EntityNotFoundException("Can't find user by email" + email));
     }
 }

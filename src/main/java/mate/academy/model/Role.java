@@ -24,15 +24,11 @@ public class Role implements GrantedAuthority {
     private Long id;
     @Column(nullable = false, unique = true, columnDefinition = "varchar")
     @Enumerated(EnumType.STRING)
-    private RoleName role;
-
-    public Role(Long id) {
-        this.id = id;
-    }
+    private RoleName name;
 
     @Override
     public String getAuthority() {
-        return role.name();
+        return name.name();
     }
 
     public enum RoleName {

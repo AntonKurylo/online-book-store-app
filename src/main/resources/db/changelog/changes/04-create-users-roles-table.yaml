@@ -10,8 +10,6 @@ databaseChangeLog:
                   name: user_id
                   type: bigint
                   constraints:
-                    primaryKey: true
-                    primaryKeyName: pk_user_role
                     foreignKeyName: fk_users_roles_user
                     referencedTableName: users
                     referencedColumnNames: id
@@ -20,9 +18,11 @@ databaseChangeLog:
                   name: role_id
                   type: bigint
                   constraints:
-                    primaryKey: true
-                    primaryKeyName: pk_user_role
                     foreignKeyName: fk_users_roles_role
                     referencedTableName: roles
                     referencedColumnNames: id
                     nullable: false
+        - addUniqueConstraint:
+            tableName: users_roles
+            constraintName: unique_user_role
+            columnNames: user_id, role_id

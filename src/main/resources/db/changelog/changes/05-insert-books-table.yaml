@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-books
+      author: mateacademy
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Sample Book 1" }
+              - column: { name: author, value: "Author B" }
+              - column: { name: isbn, value: "9781122334455" }
+              - column: { name: price, valueNumeric: "29.99" }
+              - column: { name: description, value: "Another sample book description." }
+              - column: { name: cover_image, value: "http://example.com/cover1.jpg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Sample Book 2" }
+              - column: { name: author, value: "Author C" }
+              - column: { name: isbn, value: "9789876543210" }
+              - column: { name: price, valueNumeric: "24.99" }
+              - column: { name: description, value: "Another sample book description." }
+              - column: { name: cover_image, value: "http://example.com/cover2.jpg" }

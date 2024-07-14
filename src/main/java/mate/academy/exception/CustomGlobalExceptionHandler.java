@@ -24,7 +24,7 @@ public class CustomGlobalExceptionHandler {
         List<String> errors = ex.getBindingResult().getAllErrors().stream()
                 .map(this::getErrorMessage)
                 .toList();
-        Map<String, Object> body = buildBody(errors, status);
+        Map<String, Object> body = getBody(errors, status);
         return new ResponseEntity<>(body, status);
     }
 
@@ -32,7 +32,7 @@ public class CustomGlobalExceptionHandler {
     public ResponseEntity<Object> handleRegistrationExceptions(RegistrationException ex) {
         HttpStatus status = HttpStatus.CONFLICT;
         List<String> errors = List.of(ex.getMessage());
-        Map<String, Object> body = buildBody(errors, status);
+        Map<String, Object> body = getBody(errors, status);
         return new ResponseEntity<>(body, status);
     }
 
@@ -45,7 +45,7 @@ public class CustomGlobalExceptionHandler {
         return e.getDefaultMessage();
     }
 
-    private Map<String, Object> buildBody(List<String> errors, HttpStatus status) {
+    private Map<String, Object> getBody(List<String> errors, HttpStatus status) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put(TIMESTAMP, LocalDateTime.now());
         body.put(STATUS, status);

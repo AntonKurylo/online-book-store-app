@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-users
+      author: mateacademy
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "admin@mateacademy.com" }
+              - column: { name: password, value: "$2a$10$0Hm0UWYiMzIYDO8mS75ahOM1KilyxJRPEKsrcgP0VwUXb.OiZ2NGW" }
+              - column: { name: first_name, value: "Admin" }
+              - column: { name: last_name, value: "Admin" }
+              - column: { name: shipping_address, value: "Admin" }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "john.doe@example.com" }
+              - column: { name: password, value: "$2a$10$QHtBIrwwfdyEecmjD6wp1OxErC0udRtV/yaAD.71TjnYxTq8uh/.K" }
+              - column: { name: first_name, value: "John" }
+              - column: { name: last_name, value: "Doe" }
+              - column: { name: shipping_address, value: "123 Main St, City, Country" }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "bob.pat@example.com" }
+              - column: { name: password, value: "$2a$10$yKSFMpdD6maHyFuj9yhG3eW6fi2d9gSwE4Qvdwsc9dZBWGcfyku.O" }
+              - column: { name: first_name, value: "Bob" }
+              - column: { name: last_name, value: "Pat" }
+              - column: { name: shipping_address, value: "456 Main St, City, Country" }

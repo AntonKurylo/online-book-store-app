@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-roles-table
+      author: mateacademy
+      changes:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_user_role
+                    foreignKeyName: fk_users_roles_user
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_user_role
+                    foreignKeyName: fk_users_roles_role
+                    referencedTableName: roles
+                    referencedColumnNames: id
+                    nullable: false

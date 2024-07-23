@@ -29,48 +29,48 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create a new book", description = "Creates a new book")
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Create a new book", description = "Creates a new book")
+    @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get all books", description = "Returns a list of all available books")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping
     public List<BookDto> findAllBooks(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get a book by id", description = "Returns a book by id")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/{id}")
     public BookDto findBookById(@PathVariable Long id) {
         return bookService.findBookById(id);
     }
 
-    @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Update a book by id", description = "Updates a book by id")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{id}")
     public BookDto updateBookById(@PathVariable Long id,
                                   @RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.updateById(id, requestDto);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Delete a book by id", description = "Deletes a book by id")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBookById(@PathVariable Long id) {
         bookService.deleteById(id);
     }
 
-    @GetMapping("/search")
-    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Search books by search parameters",
             description = "Returns a list of available books by search parameters")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/search")
     public List<BookDto> searchBooks(BookSearchParametersDto searchParameters, Pageable pageable) {
         return bookService.search(searchParameters, pageable);
     }

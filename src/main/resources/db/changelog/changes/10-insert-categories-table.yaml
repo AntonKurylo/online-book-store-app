@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-categories
+      author: mateacademy
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Fantasy" }
+              - column: { name: description, value: "Fantasy books category" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "History" }
+              - column: { name: description, value: "Historical books category" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Detective" }
+              - column: { name: description, value: "Detective books category" }

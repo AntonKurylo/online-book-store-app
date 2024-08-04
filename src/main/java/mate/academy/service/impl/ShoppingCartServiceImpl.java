@@ -6,6 +6,7 @@ import mate.academy.dto.cartitem.UpdateCartItemRequestDto;
 import mate.academy.dto.shoppingcart.ShoppingCartDto;
 import mate.academy.exception.EntityNotFoundException;
 import mate.academy.mapper.ShoppingCartMapper;
+import mate.academy.model.Book;
 import mate.academy.model.CartItem;
 import mate.academy.model.ShoppingCart;
 import mate.academy.model.User;
@@ -41,22 +42,24 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartDto addCartItem(CreateCartItemRequestDto requestDto) {
-        if (!bookRepository.existsById(requestDto.bookId())) {
-            throw new EntityNotFoundException("Can't find a book by id: " + requestDto.bookId());
-        }
-        Long authenticatedUserId = authenticationService.getAuthenticatedUserId();
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(authenticatedUserId);
+        Book book = bookRepository.findById(requestDto.bookId()).orElseThrow(() ->
+                new EntityNotFoundException("Can't find a book by id: " + requestDto.bookId()));
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(
+                authenticationService.getAuthenticatedUserId());
         CartItem cartItem = shoppingCart.getCartItems().stream()
                 .filter(item -> item.getBook().getId().equals(requestDto.bookId()))
                 .findFirst()
                 .map(item -> {
                     item.setQuantity(item.getQuantity() + requestDto.quantity());
                     return item;
-                }).orElse(shoppingCartMapper.toCartItemEntity(requestDto, shoppingCart));
+                }).orElseGet(() -> {
+                    CartItem entity = shoppingCartMapper.toCartItemEntity(requestDto, shoppingCart);
+                    entity.setBook(book);
+                    return entity;
+                });
         shoppingCart.getCartItems().add(cartItem);
         shoppingCartRepository.save(shoppingCart);
-        return shoppingCartMapper.toShoppingCartDto(
-                shoppingCartRepository.findByUserId(authenticatedUserId));
+        return shoppingCartMapper.toShoppingCartDto(shoppingCart);
     }
 
     @Override
